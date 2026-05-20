@@ -368,6 +368,7 @@
   <a href="#historia">Historia</a>
   <a href="#pensadores">Pensadores</a>
   <a href="#preguntas">Grandes Preguntas</a>
+  <a href="#reflexion">Reflexión</a>
 </nav>
 
 <!-- INTRO STRIP -->
@@ -644,6 +645,162 @@
     </div>
   </div>
 </section>
+
+<!-- FORMULARIO DE REFLEXIÓN -->
+<section class="section" id="reflexion" style="background: var(--parchment);">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">Espacio interactivo</p>
+    <h2 class="section-title" style="text-align:center; margin-bottom:0.5rem;">Tu Rincón de Reflexión</h2>
+    <p style="text-align:center; color:#5a4a30; margin-bottom:3rem; font-style:italic; max-width:600px; margin-left:auto; margin-right:auto;">Elige una de las grandes preguntas filosóficas, escribe tu reflexión personal y recibe un análisis de qué corriente filosófica representa tu pensamiento.</p>
+
+    <div style="max-width:720px; margin:0 auto;">
+
+      <!-- PASO 1: ELEGIR PREGUNTA -->
+      <div style="margin-bottom:1.5rem;">
+        <label style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; font-weight:500; color:var(--gold); display:block; margin-bottom:0.8rem;">1. Elige una pregunta filosófica</label>
+        <div id="pregunta-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Qué es la realidad? ¿Existe independientemente de nuestra mente?">¿Qué es la realidad?</button>
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Cómo podemos conocer la verdad? ¿Viene de la razón o de la experiencia?">¿Cómo conocemos la verdad?</button>
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Qué hace que una acción sea buena o mala? ¿Existe la moral absoluta?">¿Qué es el bien?</button>
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Tenemos libre albedrío o todo está determinado de antemano?">¿Somos verdaderamente libres?</button>
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Tiene la vida un propósito o sentido, o se lo damos nosotros mismos?">¿Tiene sentido la vida?</button>
+          <button class="pregunta-btn" onclick="seleccionarPregunta(this)" data-q="¿Qué es la justicia? ¿Puede existir una sociedad verdaderamente justa?">¿Qué es la justicia?</button>
+        </div>
+      </div>
+
+      <!-- PASO 2: NOMBRE -->
+      <div style="margin-bottom:1.5rem;">
+        <label style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; font-weight:500; color:var(--gold); display:block; margin-bottom:0.8rem;">2. Tu nombre (opcional)</label>
+        <input type="text" id="nombre-input" placeholder="¿Cómo te llamas?" style="width:100%; padding:0.9rem 1.2rem; border:1px solid var(--mist); border-radius:6px; font-family:'DM Sans',sans-serif; font-size:0.95rem; background:#fff; color:var(--ink); outline:none;">
+      </div>
+
+      <!-- PASO 3: REFLEXIÓN -->
+      <div style="margin-bottom:1.5rem;">
+        <label style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; font-weight:500; color:var(--gold); display:block; margin-bottom:0.8rem;">3. Escribe tu reflexión</label>
+        <div id="pregunta-seleccionada" style="display:none; background:var(--quote-bg); border-left:3px solid var(--gold); padding:0.8rem 1.2rem; margin-bottom:0.8rem; border-radius:0 4px 4px 0; font-style:italic; color:#3a2a10; font-size:0.9rem;"></div>
+        <textarea id="reflexion-input" placeholder="Escribe aquí tu reflexión personal... No hay respuestas incorrectas, solo pensamientos honestos." style="width:100%; min-height:160px; padding:1rem 1.2rem; border:1px solid var(--mist); border-radius:6px; font-family:'DM Sans',sans-serif; font-size:0.95rem; background:#fff; color:var(--ink); resize:vertical; outline:none; line-height:1.7;"></textarea>
+        <p style="font-size:12px; color:#9a8a70; margin-top:0.4rem;">Mínimo 30 caracteres para un análisis más preciso.</p>
+      </div>
+
+      <!-- BOTÓN -->
+      <button onclick="enviarReflexion()" id="btn-enviar" style="width:100%; background:var(--ink); color:var(--parchment); border:none; padding:1rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:background 0.2s; letter-spacing:0.03em;">
+        Analizar mi reflexión →
+      </button>
+
+      <!-- LOADING -->
+      <div id="loading-box" style="display:none; text-align:center; padding:3rem 1rem;">
+        <div id="loading-dots" style="display:flex; justify-content:center; gap:8px; margin-bottom:1rem;">
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0s"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0.2s"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0.4s"></span>
+        </div>
+        <p style="color:#5a4a30; font-style:italic; font-size:0.95rem;">Analizando tu pensamiento filosófico...</p>
+      </div>
+
+      <!-- RESULTADO -->
+      <div id="resultado-box" style="display:none; margin-top:2rem;">
+        <div style="background:var(--ink); border-radius:8px; padding:2.5rem; color:var(--parchment);">
+          <p style="font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.3rem;">Análisis filosófico de</p>
+          <h3 id="resultado-nombre" style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--parchment); margin-bottom:1.5rem;"></h3>
+          <div id="resultado-texto" style="line-height:1.9; color:rgba(247,243,236,0.85); font-size:0.95rem;"></div>
+        </div>
+        <button onclick="nuevaReflexion()" style="margin-top:1rem; width:100%; background:transparent; color:var(--gold); border:1px solid var(--gold); padding:0.9rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer;">
+          Escribir otra reflexión
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes dot { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+  .pregunta-btn {
+    background:#fff; border:1px solid var(--mist); border-radius:6px;
+    padding:0.9rem 1rem; text-align:left; font-family:'DM Sans',sans-serif;
+    font-size:0.88rem; color:var(--ink); cursor:pointer;
+    transition:border-color 0.2s, background 0.2s; line-height:1.4;
+  }
+  .pregunta-btn:hover { border-color:var(--gold); background:#fdf8f0; }
+  .pregunta-btn.activa { border-color:var(--gold); background:#fdf0d0; font-weight:500; }
+  #reflexion-input:focus, #nombre-input:focus { border-color:var(--gold); }
+  #btn-enviar:hover { background:#2a1a00; }
+</style>
+
+<script>
+let preguntaSeleccionada = '';
+
+function seleccionarPregunta(btn) {
+  document.querySelectorAll('.pregunta-btn').forEach(b => b.classList.remove('activa'));
+  btn.classList.add('activa');
+  preguntaSeleccionada = btn.dataset.q;
+  const el = document.getElementById('pregunta-seleccionada');
+  el.textContent = '"' + preguntaSeleccionada + '"';
+  el.style.display = 'block';
+}
+
+async function enviarReflexion() {
+  const nombre = document.getElementById('nombre-input').value.trim() || 'Lector';
+  const reflexion = document.getElementById('reflexion-input').value.trim();
+
+  if (!preguntaSeleccionada) { alert('Por favor elige una pregunta filosófica primero.'); return; }
+  if (reflexion.length < 30) { alert('Escribe un poco más para poder analizar tu reflexión (mínimo 30 caracteres).'); return; }
+
+  document.getElementById('btn-enviar').style.display = 'none';
+  document.getElementById('loading-box').style.display = 'block';
+  document.getElementById('resultado-box').style.display = 'none';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `Eres un filósofo sabio y amigable que analiza reflexiones de estudiantes de preparatoria en un blog de filosofía en español. 
+
+El estudiante llamado "${nombre}" respondió a la pregunta filosófica: "${preguntaSeleccionada}"
+
+Su reflexión fue: "${reflexion}"
+
+Analiza su reflexión de forma cálida, inteligente y motivadora. Tu respuesta debe:
+1. Identificar con qué corriente(s) filosófica(s) conecta su pensamiento (Idealismo, Empirismo, Existencialismo, Estoicismo, Utilitarismo, Pragmatismo, Racionalismo, etc.)
+2. Explicar por qué su reflexión se relaciona con esa corriente
+3. Mencionar un filósofo histórico que pensaría algo similar
+4. Terminar con una pregunta adicional que lo invite a seguir reflexionando
+
+Sé cálido, inteligente y accesible. Máximo 4 párrafos. No uses asteriscos ni markdown, solo texto plano.`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const texto = data.content && data.content[0] ? data.content[0].text : 'No se pudo generar el análisis. Intenta de nuevo.';
+
+    document.getElementById('resultado-nombre').textContent = nombre;
+    document.getElementById('resultado-texto').innerHTML = texto.split('\n').filter(p => p.trim()).map(p => `<p style="margin-bottom:1rem;">${p}</p>`).join('');
+    document.getElementById('loading-box').style.display = 'none';
+    document.getElementById('resultado-box').style.display = 'block';
+
+  } catch(e) {
+    document.getElementById('loading-box').style.display = 'none';
+    document.getElementById('btn-enviar').style.display = 'block';
+    alert('Hubo un error al conectar. Verifica tu conexión e intenta de nuevo.');
+  }
+}
+
+function nuevaReflexion() {
+  document.querySelectorAll('.pregunta-btn').forEach(b => b.classList.remove('activa'));
+  preguntaSeleccionada = '';
+  document.getElementById('pregunta-seleccionada').style.display = 'none';
+  document.getElementById('nombre-input').value = '';
+  document.getElementById('reflexion-input').value = '';
+  document.getElementById('resultado-box').style.display = 'none';
+  document.getElementById('btn-enviar').style.display = 'block';
+}
+</script>
 
 <!-- QUOTE FINAL -->
 <section class="quote-section">
