@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filosofía & Pensamiento — Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #f7f3ec;
+    --cream: #fdfaf5;
+    --gold: #c9922a;
+    --gold-light: #f0d89a;
+    --rust: #8b3a1e;
+    --sage: #4a6741;
+    --midnight: #1c2a4a;
+    --mist: #e8e4dc;
+    --quote-bg: #f0ebe0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 110%, #3d2a0a 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% -10%, #2a1c0a 0%, transparent 60%),
+      #0e0b06;
+    z-index: 0;
+  }
+
+  .header-pattern {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,146,42,0.07) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,146,42,0.07) 60px);
+  }
+
+  .header-content { position: relative; z-index: 2; padding: 4rem 2rem; max-width: 900px; }
+
+  .blog-tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,146,42,0.5);
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--parchment);
+    margin-bottom: 0.3em;
+  }
+
+  header h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .header-subtitle {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(247,243,236,0.6);
+    font-style: italic;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(247,243,236,0.4); font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .scroll-arrow {
+    width: 24px; height: 24px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
+
+  /* ─── NAV ─── */
+  nav {
+    background: var(--ink);
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(201,146,42,0.3);
+    padding: 1rem 2rem;
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+  }
+  nav a {
+    color: rgba(247,243,236,0.7); text-decoration: none;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+
+  /* ─── INTRO STRIP ─── */
+  .intro-strip {
+    background: var(--gold);
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #2a1a00;
+  }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    font-weight: 500; color: var(--gold); margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 1.5rem; color: var(--ink);
+  }
+
+  /* ─── INTRO SECTION ─── */
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .intro-text p { color: #3a3020; margin-bottom: 1.2rem; }
+  .intro-image-wrap {
+    position: relative;
+  }
+  .intro-image-wrap img {
+    width: 100%; border-radius: 4px;
+    display: block;
+    filter: sepia(20%) contrast(1.05);
+  }
+  .image-caption {
+    font-size: 12px; color: #7a6a50; font-style: italic; margin-top: 0.5rem; text-align: center;
+  }
+  .gold-line { width: 60px; height: 3px; background: var(--gold); margin: 1.5rem 0; }
+
+  /* ─── PHILOSOPHY CARDS ─── */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; margin: 3rem 0; background: var(--mist); }
+
+  .phil-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .phil-card:hover { background: #f9f5ee; }
+
+  .phil-card::before {
+    content: attr(data-symbol);
+    position: absolute; top: -0.3em; right: 0.3rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem; font-weight: 900;
+    color: rgba(201,146,42,0.08); line-height: 1;
+    pointer-events: none;
+  }
+
+  .card-era {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.6rem;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; font-weight: 700; margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .card-subtitle { font-style: italic; color: #6a5a40; font-size: 0.95rem; margin-bottom: 1.2rem; }
+  .card-body { color: #3a3020; font-size: 0.95rem; line-height: 1.75; }
+  .card-tag {
+    display: inline-block; margin-top: 1.2rem;
+    background: var(--gold-light); color: #4a3000;
+    font-size: 11px; padding: 4px 12px; border-radius: 100px; font-weight: 500;
+  }
+
+  /* ─── FEATURED QUOTE ─── */
+  .quote-section {
+    background: var(--ink);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .quote-section::before {
+    content: '"';
+    position: absolute; top: -1rem; left: 50%; transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 20rem; font-weight: 900;
+    color: rgba(201,146,42,0.06); line-height: 1; pointer-events: none;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-style: italic; font-weight: 400;
+    color: var(--parchment); line-height: 1.5;
+    max-width: 780px; margin: 0 auto 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .quote-author {
+    color: var(--gold); font-size: 0.9rem;
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+    position: relative; z-index: 1;
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline { position: relative; padding: 2rem 0; }
+  .timeline::before {
+    content: ''; position: absolute; left: 32px; top: 0; bottom: 0;
+    width: 1px; background: var(--gold-light);
+  }
+  .tl-item { display: flex; gap: 2.5rem; padding: 2rem 0; align-items: flex-start; }
+  .tl-dot {
+    flex-shrink: 0; width: 65px; height: 65px; border-radius: 50%;
+    background: var(--ink); border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem; font-weight: 700; color: var(--gold);
+    text-align: center; line-height: 1.2; z-index: 1; position: relative;
+  }
+  .tl-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem;
+  }
+  .tl-content .period { color: var(--gold); font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .tl-content p { color: #3a3020; font-size: 0.95rem; }
+
+  /* ─── THINKERS GRID ─── */
+  .thinkers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+  .thinker {
+    text-align: center; padding: 2rem 1rem;
+    border-bottom: 2px solid var(--mist); transition: border-color 0.3s;
+  }
+  .thinker:hover { border-color: var(--gold); }
+  .thinker-initial {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--ink); color: var(--gold);
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem;
+  }
+  .thinker h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .thinker .dates { font-size: 0.8rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .thinker p { font-size: 0.85rem; color: #5a4a30; }
+
+  /* ─── REFLECTION BOX ─── */
+  .reflection {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--gold);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .reflection h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--rust);
+  }
+  .reflection p { color: #3a2a10; line-height: 1.8; }
+
+  /* ─── PHILOSOPHY IMAGE FEATURE ─── */
+  .img-feature { display: grid; grid-template-columns: 3fr 2fr; gap: 3rem; align-items: center; }
+  .img-feature.reverse { grid-template-columns: 2fr 3fr; }
+  .img-feature img { width: 100%; border-radius: 4px; filter: sepia(15%) contrast(1.05); display: block; }
+  .img-feature-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+  .img-feature-text p { color: #3a3020; margin-bottom: 1rem; }
+
+  /* ─── BIG QUESTIONS ─── */
+  .questions { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .question {
+    border: 1px solid var(--mist);
+    padding: 2rem; border-radius: 4px;
+    position: relative; overflow: hidden;
+    background: #fff;
+  }
+  .question::after {
+    content: '?';
+    position: absolute; right: -0.1em; bottom: -0.3em;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem; font-weight: 900; color: rgba(201,146,42,0.07);
+    line-height: 1; pointer-events: none;
+  }
+  .question h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .question p { font-size: 0.9rem; color: #5a4a30; }
+  .question .school { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.15em; margin-top: 1rem; font-weight: 500; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink); color: rgba(247,243,236,0.5);
+    padding: 4rem 2rem; text-align: center;
+  }
+  footer .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: var(--parchment); margin-bottom: 0.5rem;
+  }
+  footer p { font-size: 0.85rem; }
+  .footer-divider { width: 60px; height: 1px; background: var(--gold); margin: 1.5rem auto; }
+  .footer-meta { font-size: 0.8rem; color: rgba(247,243,236,0.3); margin-top: 2rem; }
+
+  /* ─── DIVIDER ─── */
+  .ornament { text-align: center; padding: 1rem 0; color: var(--gold); font-size: 1.2rem; letter-spacing: 0.5rem; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    .intro-grid, .img-feature, .img-feature.reverse, .questions { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .thinkers { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER HERO -->
+<header>
+  <div class="header-bg"></div>
+  <div class="header-pattern"></div>
+  <div class="header-content">
+    <div class="blog-tag">Blog · Lengua y Literatura</div>
+    <h1>El Arte de<br><em>Pensar</em></h1>
+    <p class="header-subtitle">Un viaje por las grandes corrientes filosóficas que han dado forma a nuestra manera de entender el mundo</p>
+  </div>
+  <div class="scroll-hint">
+    <span>Leer</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#introduccion">Introducción</a>
+  <a href="#corrientes">Corrientes</a>
+  <a href="#historia">Historia</a>
+  <a href="#pensadores">Pensadores</a>
+  <a href="#preguntas">Grandes Preguntas</a>
+</nav>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">"La filosofía no es una doctrina, sino una actividad." — Ludwig Wittgenstein</div>
+
+<!-- INTRODUCCIÓN -->
+<section class="section" id="introduccion">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-text">
+        <p class="section-label">¿Qué es la filosofía?</p>
+        <h2 class="section-title">El amor por la<br>sabiduría</h2>
+        <div class="gold-line"></div>
+        <p>La palabra <em>filosofía</em> proviene del griego <strong>φιλοσοφία</strong> (philosophía): <em>philos</em>, amor, y <em>sophia</em>, sabiduría. Desde la Antigua Grecia hasta nuestros días, los seres humanos han intentado responder las preguntas más fundamentales de la existencia.</p>
+        <p>¿Qué es la realidad? ¿Cómo podemos conocerla? ¿Qué es el bien y el mal? ¿Tiene sentido la vida? Estas preguntas no tienen respuestas fáciles, y eso es precisamente lo que las hace fascinantes.</p>
+        <p>A lo largo de los siglos, distintas corrientes filosóficas han surgido para explorar estas incógnitas desde ángulos diferentes, construyendo el maravilloso edificio del pensamiento humano.</p>
+      </div>
+      <div class="intro-image-wrap">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg" alt="La Escuela de Atenas, Rafael Sanzio">
+        <p class="image-caption"><em>La Escuela de Atenas</em> — Rafael Sanzio (1509–1511). Platón y Aristóteles al centro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">✦ ✦ ✦</div>
+
+<!-- CORRIENTES FILOSÓFICAS -->
+<section class="section" id="corrientes" style="background: var(--parchment); padding-top: 5rem; padding-bottom: 5rem;">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">Principales corrientes</p>
+    <h2 class="section-title" style="text-align:center; max-width: 600px; margin: 0 auto 3rem;">Las grandes filosofías<br>de la humanidad</h2>
+
+    <div class="cards-grid">
+
+      <div class="phil-card" data-symbol="I">
+        <p class="card-era">Siglo XVII–XX</p>
+        <h3 class="card-title">Idealismo</h3>
+        <p class="card-subtitle">La realidad es mental o espiritual</p>
+        <p class="card-body">Para los idealistas, la mente o el espíritu es la base fundamental de toda realidad. El mundo material depende de la mente que lo percibe. Descartes, Kant y Hegel son sus grandes exponentes. El <em>cogito ergo sum</em> —"pienso, luego existo"— resume esta postura: la conciencia es la única certeza absoluta.</p>
+        <span class="card-tag">Mente & Realidad</span>
+      </div>
+
+      <div class="phil-card" data-symbol="E">
+        <p class="card-era">Siglo XVIII–XIX</p>
+        <h3 class="card-title">Empirismo</h3>
+        <p class="card-subtitle">Todo conocimiento viene de la experiencia</p>
+        <p class="card-body">Frente al racionalismo, el empirismo sostiene que el conocimiento proviene únicamente de los sentidos y la experiencia. Locke, Berkeley y Hume argumentaron que la mente es una <em>tabula rasa</em> al nacer, y que todo lo que sabemos proviene del mundo exterior percibido por nuestros sentidos.</p>
+        <span class="card-tag">Conocimiento & Sentidos</span>
+      </div>
+
+      <div class="phil-card" data-symbol="E">
+        <p class="card-era">Siglo XIX–XX</p>
+        <h3 class="card-title">Existencialismo</h3>
+        <p class="card-subtitle">La existencia precede a la esencia</p>
+        <p class="card-body">El existencialismo nació de la angustia moderna. Sartre proclamó que el ser humano es radicalmente libre y responsable de lo que hace con su vida. Kierkegaard, Nietzsche y Camus exploraron el absurdo de la existencia, la autenticidad y la búsqueda de sentido en un mundo sin respuestas garantizadas.</p>
+        <span class="card-tag">Libertad & Autenticidad</span>
+      </div>
+
+      <div class="phil-card" data-symbol="S">
+        <p class="card-era">Siglo XIX–XX</p>
+        <h3 class="card-title">Stoicismo</h3>
+        <p class="card-subtitle">Virtud, razón y ecuanimidad</p>
+        <p class="card-body">Fundada por Zenón de Citio, esta escuela enseña que la felicidad se alcanza viviendo según la razón y aceptando serenamente lo que no podemos controlar. Marco Aurelio, Epicteto y Séneca escribieron sobre cómo dominar las emociones y vivir con sabiduría en cualquier circunstancia.</p>
+        <span class="card-tag">Virtud & Serenidad</span>
+      </div>
+
+      <div class="phil-card" data-symbol="P">
+        <p class="card-era">Finales Siglo XIX</p>
+        <h3 class="card-title">Pragmatismo</h3>
+        <p class="card-subtitle">La verdad es lo que funciona</p>
+        <p class="card-body">El pragmatismo, corriente americana encabezada por William James y John Dewey, sostiene que el valor de una idea reside en sus consecuencias prácticas. No nos preguntamos "¿es verdad?", sino "¿qué diferencia hace creerlo?". El pensamiento es un instrumento para resolver problemas reales.</p>
+        <span class="card-tag">Acción & Consecuencias</span>
+      </div>
+
+      <div class="phil-card" data-symbol="U">
+        <p class="card-era">Siglo XVIII–XIX</p>
+        <h3 class="card-title">Utilitarismo</h3>
+        <p class="card-subtitle">El mayor bien para el mayor número</p>
+        <p class="card-body">Bentham y Mill propusieron que la acción correcta es aquella que maximiza la felicidad total. La ética, en lugar de basarse en mandatos divinos o deberes abstractos, debería medir sus consecuencias: ¿produce más felicidad o más sufrimiento? Una filosofía profundamente igualitaria en su esencia.</p>
+        <span class="card-tag">Ética & Bien Común</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE SECTION -->
+<section class="quote-section">
+  <p class="quote-text">"El asombro es el comienzo de la filosofía. Los hombres empezaron a filosofar movidos por el asombro, asombrándose primero de los fenómenos más simples."</p>
+  <p class="quote-author">— Aristóteles, Metafísica</p>
+</section>
+
+<!-- HISTORIA TIMELINE -->
+<section class="section" id="historia">
+  <div class="container">
+    <p class="section-label">A través del tiempo</p>
+    <h2 class="section-title">Historia del Pensamiento<br>Filosófico</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">600<br>a.C.</div>
+        <div class="tl-content">
+          <h3>Filosofía Presocrática</h3>
+          <p class="period">~ 600 – 400 a.C.</p>
+          <p>Los primeros filósofos griegos buscaban el <em>arché</em>, el principio fundamental de todo: Tales propuso el agua, Heráclito el fuego, Pitágoras los números. Abandonaron las explicaciones míticas en busca de respuestas racionales sobre la naturaleza del cosmos.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">400<br>a.C.</div>
+        <div class="tl-content">
+          <h3>El Período Clásico</h3>
+          <p class="period">~ 470 – 322 a.C.</p>
+          <p>Sócrates, Platón y Aristóteles definieron el pensamiento occidental para siempre. Sócrates enseñó mediante preguntas; Platón construyó su teoría de las Ideas; Aristóteles sistematizó la lógica, la ética, la política y la física.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">Edad<br>Media</div>
+        <div class="tl-content">
+          <h3>Filosofía Escolástica</h3>
+          <p class="period">~ 800 – 1400</p>
+          <p>San Agustín, Averroes y Santo Tomás de Aquino intentaron conciliar la fe cristiana e islámica con la razón aristotélica. La filosofía sirvió de fundamento a la teología, construyendo grandes sistemas de pensamiento.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">Siglo<br>XVII</div>
+        <div class="tl-content">
+          <h3>La Modernidad</h3>
+          <p class="period">1600 – 1800</p>
+          <p>Descartes separó cuerpo y mente, Spinoza propuso un Dios-naturaleza, Locke habló de los derechos naturales. La Ilustración apostó por la razón, la libertad y la ciencia como camino al progreso humano.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">Siglo<br>XIX</div>
+        <div class="tl-content">
+          <h3>Filosofía Contemporánea</h3>
+          <p class="period">1800 – presente</p>
+          <p>Hegel, Marx, Nietzsche, Freud, Husserl... El siglo XIX y XX explotan en corrientes: marxismo, fenomenología, existencialismo, hermenéutica, filosofía analítica. La pregunta ahora no es solo <em>qué</em> es el mundo, sino <em>cómo lo interpretamos</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECCION -->
+<div class="container">
+  <div class="reflection">
+    <h3>Para reflexionar</h3>
+    <p>Toda filosofía nace de una época y un lugar específico. Los problemas de Atenas en el siglo V a.C., los de la Revolución Industrial o los de nuestra era digital son distintos. Sin embargo, las preguntas fundamentales —¿qué es verdad?, ¿cómo debo vivir?, ¿existe la libertad?— permanecen. Leer filosofía es, en parte, escucharnos a nosotros mismos a través de otros.</p>
+  </div>
+</div>
+
+<!-- IMAGEN FEATURE: Nietzsche -->
+<section class="section" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="img-feature">
+      <img src="https://commons.wikimedia.org/wiki/File:Nietzsche187a.jpg" alt="Friedrich Nietzsche">
+      <div class="img-feature-text">
+        <p class="section-label">Figura destacada</p>
+        <h2>Friedrich Nietzsche</h2>
+        <div class="gold-line"></div>
+        <p>Nietzsche fue uno de los pensadores más radicales e influyentes del siglo XIX. Proclamó la "muerte de Dios" como diagnóstico cultural, no como blasfemia: los valores tradicionales habían perdido su fundamento.</p>
+        <p>Propuso la figura del <em>Übermensch</em> (superhombre), un ser capaz de crear sus propios valores. Su concepto de "voluntad de poder" y el "eterno retorno" siguen siendo debatidos hoy en filosofía, psicología y literatura.</p>
+        <p><em>"Lo que no me mata, me hace más fuerte."</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGEN FEATURE: Simone de Beauvoir -->
+<section class="section" style="padding-top: 0; padding-bottom: 5rem;">
+  <div class="container">
+    <div class="img-feature reverse">
+      <div class="img-feature-text">
+        <p class="section-label">Figura destacada</p>
+        <h2>Simone de Beauvoir</h2>
+        <div class="gold-line"></div>
+        <p>Filósofa existencialista francesa y figura central del feminismo filosófico. En su obra magistral <em>El segundo sexo</em> (1949), escribió la frase que cambió la teoría de género: <strong>"No se nace mujer, se llega a serlo."</strong></p>
+        <p>Beauvoir argumentó que la identidad femenina es una construcción social y cultural, no un destino biológico. Su trabajo unió la filosofía existencialista con la lucha por la igualdad.</p>
+        <p><em>"Cambiar la vida significa cambiar las ideas."</em></p>
+      </div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_de_Beauvoir2.png/800px-Simone_de_Beauvoir2.png" alt="Simone de Beauvoir">
+    </div>
+  </div>
+</section>
+
+<div class="ornament">✦ ✦ ✦</div>
+
+<!-- PENSADORES -->
+<section class="section" id="pensadores" style="background: var(--parchment);">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">Galería</p>
+    <h2 class="section-title" style="text-align:center; margin-bottom: 3rem;">Grandes Pensadores<br>de la Historia</h2>
+
+    <div class="thinkers">
+      <div class="thinker">
+        <div class="thinker-initial">S</div>
+        <h3>Sócrates</h3>
+        <p class="dates">470 – 399 a.C.</p>
+        <p>"Solo sé que no sé nada." El padre de la mayéutica, método de enseñanza mediante preguntas.</p>
+      </div>
+      <div class="thinker">
+        <div class="thinker-initial">P</div>
+        <h3>Platón</h3>
+        <p class="dates">428 – 347 a.C.</p>
+        <p>Discípulo de Sócrates y maestro de Aristóteles. Autor de <em>La República</em> y la teoría de las Ideas.</p>
+      </div>
+      <div class="thinker">
+        <div class="thinker-initial">A</div>
+        <h3>Aristóteles</h3>
+        <p class="dates">384 – 322 a.C.</p>
+        <p>Sistematizó el saber antiguo. "El hombre es un animal político." Padre de la lógica formal.</p>
+      </div>
+      <div class="thinker">
+        <div class="thinker-initial">D</div>
+        <h3>Descartes</h3>
+        <p class="dates">1596 – 1650</p>
+        <p><em>Cogito ergo sum.</em> Fundador de la filosofía moderna y del dualismo mente-cuerpo.</p>
+      </div>
+      <div class="thinker">
+        <div class="thinker-initial">K</div>
+        <h3>Immanuel Kant</h3>
+        <p class="dates">1724 – 1804</p>
+        <p>Su imperativo categórico y la <em>Crítica de la razón pura</em> revolucionaron la filosofía occidental.</p>
+      </div>
+      <div class="thinker">
+        <div class="thinker-initial">S</div>
+        <h3>Jean-Paul Sartre</h3>
+        <p class="dates">1905 – 1980</p>
+        <p>"La existencia precede a la esencia." Máximo exponente del existencialismo francés.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRANDES PREGUNTAS -->
+<section class="section" id="preguntas">
+  <div class="container">
+    <p class="section-label">Filosofía en acción</p>
+    <h2 class="section-title">Las Grandes Preguntas<br>de la Filosofía</h2>
+    <p style="max-width: 600px; color: #5a4a30; margin-bottom: 3rem;">Cada corriente filosófica intenta responder a estas preguntas eternas desde su propia perspectiva. No hay respuestas únicas —ese es el punto.</p>
+
+    <div class="questions">
+      <div class="question">
+        <h3>¿Qué es la realidad?</h3>
+        <p>¿El mundo existe independientemente de nuestra mente? ¿O es una construcción de nuestra percepción? ¿Podemos confiar en nuestros sentidos?</p>
+        <p class="school">Metafísica & Ontología</p>
+      </div>
+      <div class="question">
+        <h3>¿Cómo podemos conocer?</h3>
+        <p>¿El conocimiento viene de la razón o de la experiencia? ¿Existen verdades absolutas o todo es relativo a la cultura y el tiempo?</p>
+        <p class="school">Epistemología</p>
+      </div>
+      <div class="question">
+        <h3>¿Qué es el bien?</h3>
+        <p>¿Es una acción buena por sus consecuencias, por la intención o por seguir una norma universal? ¿La moral es relativa o absoluta?</p>
+        <p class="school">Ética & Moral</p>
+      </div>
+      <div class="question">
+        <h3>¿Qué es lo bello?</h3>
+        <p>¿La belleza existe en el objeto o en el ojo del observador? ¿Por qué el arte nos mueve? ¿Puede algo feo ser artísticamente valioso?</p>
+        <p class="school">Estética</p>
+      </div>
+      <div class="question">
+        <h3>¿Somos libres?</h3>
+        <p>¿Existe el libre albedrío o todo está determinado? Si somos libres, ¿qué responsabilidad tenemos sobre nuestras acciones?</p>
+        <p class="school">Filosofía de la Acción</p>
+      </div>
+      <div class="question">
+        <h3>¿Qué es la justicia?</h3>
+        <p>¿Cómo debemos organizarnos en sociedad? ¿Qué derechos son fundamentales? ¿La ley y la moral coinciden siempre?</p>
+        <p class="school">Filosofía Política</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FINAL -->
+<section class="quote-section">
+  <p class="quote-text">"No temas a la filosofía. Ella no da respuestas fáciles, pero sí las preguntas más importantes."</p>
+  <p class="quote-author">— Reflexión final del blog</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-title">El Arte de Pensar</p>
+  <div class="footer-divider"></div>
+  <p>Blog elaborado para la materia de <strong style="color:rgba(247,243,236,0.8)">Lengua y Literatura</strong></p>
+  <p style="margin-top: 0.5rem; font-style: italic; color: rgba(247,243,236,0.4);">Un viaje por las grandes corrientes filosóficas de la humanidad</p>
+  <p class="footer-meta">Imágenes: Wikimedia Commons (dominio público) · Fuentes: Google Fonts</p>
+</footer>
+
+</body>
+</html>
