@@ -651,7 +651,7 @@
   <div class="container">
     <p class="section-label" style="text-align:center;">Espacio interactivo</p>
     <h2 class="section-title" style="text-align:center; margin-bottom:0.5rem;">Tu Rincón de Reflexión</h2>
-    <p style="text-align:center; color:#5a4a30; margin-bottom:3rem; font-style:italic; max-width:600px; margin-left:auto; margin-right:auto;">Elige una de las grandes preguntas filosóficas, escribe tu reflexión personal y recibe un análisis de qué corriente filosófica representa tu pensamiento.</p>
+    <p style="text-align:center; color:#5a4a30; margin-bottom:3rem; font-style:italic; max-width:600px; margin-left:auto; margin-right:auto;">Elige una de las grandes preguntas filosóficas, escribe tu reflexión personal y descubre a qué filósofo de la historia se parece más tu forma de pensar.</p>
 
     <div style="max-width:720px; margin:0 auto;">
 
@@ -683,28 +683,44 @@
       </div>
 
       <!-- BOTÓN -->
-      <button onclick="enviarReflexion()" id="btn-enviar" style="width:100%; background:var(--ink); color:var(--parchment); border:none; padding:1rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:background 0.2s; letter-spacing:0.03em;">
+      <button onclick="analizarReflexion()" id="btn-enviar" style="width:100%; background:var(--ink); color:var(--parchment); border:none; padding:1rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:background 0.2s; letter-spacing:0.03em;">
         Analizar mi reflexión →
       </button>
 
-      <!-- LOADING -->
-      <div id="loading-box" style="display:none; text-align:center; padding:3rem 1rem;">
-        <div id="loading-dots" style="display:flex; justify-content:center; gap:8px; margin-bottom:1rem;">
-          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0s"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0.2s"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block;animation:dot 1.2s infinite 0.4s"></span>
-        </div>
-        <p style="color:#5a4a30; font-style:italic; font-size:0.95rem;">Analizando tu pensamiento filosófico...</p>
-      </div>
+      <!-- RESULTADO: FILÓSOFO -->
+      <div id="resultado-box" style="display:none; margin-top:2.5rem;">
 
-      <!-- RESULTADO -->
-      <div id="resultado-box" style="display:none; margin-top:2rem;">
-        <div style="background:var(--ink); border-radius:8px; padding:2.5rem; color:var(--parchment);">
-          <p style="font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.3rem;">Análisis filosófico de</p>
-          <h3 id="resultado-nombre" style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--parchment); margin-bottom:1.5rem;"></h3>
-          <div id="resultado-texto" style="line-height:1.9; color:rgba(247,243,236,0.85); font-size:0.95rem;"></div>
+        <!-- Cabecera del resultado -->
+        <div id="resultado-header" style="text-align:center; margin-bottom:2rem;">
+          <p style="font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.4rem;">Tu pensamiento se parece al de</p>
+          <div id="filosofo-inicial" style="width:100px; height:100px; border-radius:50%; background:var(--ink); color:var(--gold); font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:1rem auto;"></div>
+          <h3 id="filosofo-nombre" style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--ink); margin-bottom:0.2rem;"></h3>
+          <p id="filosofo-fechas" style="font-size:0.85rem; color:var(--gold); font-weight:500; margin-bottom:0.3rem;"></p>
+          <p id="filosofo-corriente" style="font-size:0.88rem; color:#7a6a50; font-style:italic;"></p>
         </div>
-        <button onclick="nuevaReflexion()" style="margin-top:1rem; width:100%; background:transparent; color:var(--gold); border:1px solid var(--gold); padding:0.9rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer;">
+
+        <!-- Tarjeta principal -->
+        <div style="background:var(--ink); border-radius:8px; padding:2.5rem; color:var(--parchment); margin-bottom:1rem;">
+          <p style="font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.5rem;">Análisis de</p>
+          <h4 id="resultado-nombre" style="font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--parchment); margin-bottom:1.5rem; border-bottom:1px solid rgba(201,146,42,0.3); padding-bottom:1rem;"></h4>
+
+          <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.6rem;">¿Por qué te pareces a este filósofo?</p>
+          <p id="resultado-explicacion" style="line-height:1.9; color:rgba(247,243,236,0.85); font-size:0.95rem; margin-bottom:1.8rem;"></p>
+
+          <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.6rem;">Una frase suya para ti</p>
+          <blockquote id="resultado-cita" style="border-left:3px solid var(--gold); padding-left:1.2rem; font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:rgba(247,243,236,0.9); line-height:1.7;"></blockquote>
+
+          <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-top:1.8rem; margin-bottom:0.6rem;">Para seguir reflexionando</p>
+          <p id="resultado-pregunta" style="line-height:1.8; color:rgba(247,243,236,0.75); font-size:0.92rem; font-style:italic;"></p>
+        </div>
+
+        <!-- Otros filósofos cercanos -->
+        <div id="cercanos-box" style="margin-bottom:1rem;">
+          <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#7a6a50; font-weight:500; margin-bottom:0.8rem; text-align:center;">También podrías conectar con…</p>
+          <div id="cercanos-lista" style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;"></div>
+        </div>
+
+        <button onclick="nuevaReflexion()" style="margin-top:0.5rem; width:100%; background:transparent; color:var(--gold); border:1px solid var(--gold); padding:0.9rem 2rem; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer;">
           Escribir otra reflexión
         </button>
       </div>
@@ -725,10 +741,141 @@
   .pregunta-btn.activa { border-color:var(--gold); background:#fdf0d0; font-weight:500; }
   #reflexion-input:focus, #nombre-input:focus { border-color:var(--gold); }
   #btn-enviar:hover { background:#2a1a00; }
+  .cercano-tag {
+    background: var(--quote-bg); border: 1px solid var(--mist);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 0.85rem; color: #4a3a20; font-weight: 500;
+  }
+  #resultado-box { animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 </style>
 
 <script>
 let preguntaSeleccionada = '';
+
+// ─── BASE DE DATOS DE FILÓSOFOS ───
+const filosofos = {
+  socrates: {
+    nombre: 'Sócrates',
+    inicial: 'S',
+    fechas: '470 – 399 a.C.',
+    corriente: 'Filosofía clásica griega · Mayéutica',
+    explicacion: 'Tu reflexión muestra un espíritu interrogativo, curioso y honesto sobre tus propias limitaciones. Como Sócrates, no pretendes tener todas las respuestas, sino que valoras el proceso de cuestionarse a uno mismo. La humildad intelectual y el deseo de examinar la vida son sellos socrático.',
+    cita: '"Solo sé que no sé nada."',
+    pregunta: '¿Alguna vez has llegado a una convicción firme solo para darte cuenta luego de que estabas equivocado? ¿Qué aprendiste de ese momento?',
+    palabrasClave: ['preguntar', 'dudar', 'no sé', 'ignorancia', 'honesto', 'examinar', 'cuestionar', 'diálogo', 'debate', 'verdad buscando', 'humildad', 'conocerse', 'reflexionar', 'incertidumbre']
+  },
+  platon: {
+    nombre: 'Platón',
+    inicial: 'P',
+    fechas: '428 – 347 a.C.',
+    corriente: 'Idealismo · Teoría de las Ideas',
+    explicacion: 'Tu pensamiento apunta a la existencia de verdades absolutas, ideales o perfectos más allá del mundo que percibimos. Como Platón, crees que la realidad más profunda no está en lo material sino en lo eterno e inmaterial. Buscas el Bien, la Belleza o la Justicia como conceptos universales.',
+    cita: '"La filosofía es el más grande de los bienes que los dioses han dado a los mortales."',
+    pregunta: '¿Crees que existe una versión perfecta e ideal de la justicia o el amor, aunque nunca la veamos completa en el mundo real?',
+    palabrasClave: ['ideal', 'perfecto', 'absoluto', 'alma', 'eterno', 'inmaterial', 'esencia', 'verdad universal', 'más allá', 'trascendente', 'mundo de las ideas', 'conocimiento puro', 'razón', 'formas', 'universal']
+  },
+  aristoteles: {
+    nombre: 'Aristóteles',
+    inicial: 'A',
+    fechas: '384 – 322 a.C.',
+    corriente: 'Filosofía práctica · Empirismo clásico',
+    explicacion: 'Tu reflexión es práctica, equilibrada y orientada a la experiencia concreta. Como Aristóteles, buscas la virtud como un hábito y el bien no como algo abstracto sino como algo que se vive día a día. Tu pensamiento valora la lógica, la observación y el término medio entre extremos.',
+    cita: '"Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto sino un hábito."',
+    pregunta: '¿En qué área de tu vida podrías practicar más conscientemente la virtud como un hábito cotidiano?',
+    palabrasClave: ['práctica', 'hábito', 'experiencia', 'observar', 'equilibrio', 'virtud', 'bien común', 'lógica', 'concreto', 'realidad', 'felicidad', 'comunidad', 'política', 'natural', 'orden']
+  },
+  descartes: {
+    nombre: 'René Descartes',
+    inicial: 'D',
+    fechas: '1596 – 1650',
+    corriente: 'Racionalismo · Filosofía moderna',
+    explicacion: 'Tu reflexión parte de la duda, de no dar nada por sentado sin antes cuestionarlo. Como Descartes, confías en la razón como el instrumento más confiable para llegar a la verdad. Tu pensamiento busca fundamentos sólidos, certezas desde las que construir el conocimiento.',
+    cita: '"Pienso, luego existo."',
+    pregunta: '¿Qué es lo único de lo que estás completamente seguro que no puede ser falso o ilusorio?',
+    palabrasClave: ['duda', 'razón', 'pensar', 'mente', 'certeza', 'cuestionar todo', 'demostrar', 'lógico', 'racional', 'evidencia', 'claro', 'distinto', 'método', 'cogito', 'fundamento']
+  },
+  kant: {
+    nombre: 'Immanuel Kant',
+    inicial: 'K',
+    fechas: '1724 – 1804',
+    corriente: 'Idealismo trascendental · Ética deontológica',
+    explicacion: 'Tu reflexión muestra una preocupación por el deber moral y por actuar según principios universales. Como Kant, crees que una acción es buena no por sus resultados sino por la intención detrás de ella y por seguir reglas que todos podrían seguir. La dignidad humana ocupa un lugar central en tu pensamiento.',
+    cita: '"Actúa solo según aquella máxima que puedas querer que se convierta en ley universal."',
+    pregunta: '¿Seguirías actuando de la misma manera si supieras que todos en el mundo actuarían exactamente igual que tú?',
+    palabrasClave: ['deber', 'moral', 'universal', 'principio', 'norma', 'obligación', 'dignidad', 'respeto', 'ley moral', 'intención', 'correcto', 'incorrecto', 'ética', 'imperativo', 'autonomía']
+  },
+  nietzsche: {
+    nombre: 'Friedrich Nietzsche',
+    inicial: 'N',
+    fechas: '1844 – 1900',
+    corriente: 'Filosofía de la vida · Nihilismo superado',
+    explicacion: 'Tu reflexión desafía las ideas convencionales y cuestiona los valores heredados. Como Nietzsche, sientes que cada persona debe forjar su propio camino y sus propios valores, sin depender de verdades impuestas. Hay en tu pensamiento una voluntad de afirmar la vida con fuerza y autenticidad.',
+    cita: '"Lo que no me mata, me hace más fuerte."',
+    pregunta: '¿Hay algún valor o creencia que hayas recibido "de herencia" y que al cuestionarlo descubriste que no era realmente tuyo?',
+    palabrasClave: ['poder', 'superar', 'crear', 'voluntad', 'valores propios', 'rebelde', 'desafiar', 'libre', 'fuerte', 'instinto', 'vivir', 'individual', 'tradición cuestionada', 'más allá del bien', 'auténtico']
+  },
+  sartre: {
+    nombre: 'Jean-Paul Sartre',
+    inicial: 'S',
+    fechas: '1905 – 1980',
+    corriente: 'Existencialismo · Filosofía de la libertad',
+    explicacion: 'Tu reflexión gira en torno a la libertad radical y la responsabilidad de construirte a ti mismo. Como Sartre, crees que no hay una esencia predefinida: primero existimos, y luego nos definimos con nuestras elecciones. Esa libertad es emocionante pero también angustiante.',
+    cita: '"La existencia precede a la esencia."',
+    pregunta: '¿Hay alguna decisión importante que hayas postergado por miedo a la responsabilidad que implica elegir?',
+    palabrasClave: ['libertad', 'existencia', 'elección', 'responsabilidad', 'angustia', 'autenticidad', 'yo mismo', 'construir', 'definir', 'vivir', 'compromiso', 'acción', 'situación', 'condena', 'otro']
+  },
+  beauvoir: {
+    nombre: 'Simone de Beauvoir',
+    inicial: 'B',
+    fechas: '1908 – 1986',
+    corriente: 'Existencialismo feminista · Filosofía social',
+    explicacion: 'Tu reflexión reconoce que muchas de las "verdades" sobre cómo debemos ser están construidas socialmente, no son naturales ni inevitables. Como Beauvoir, crees que la identidad y los roles que asumimos son producto de la cultura y la historia, y que podemos cuestionarlos y transformarlos.',
+    cita: '"No se nace mujer, se llega a serlo."',
+    pregunta: '¿Hay algún rol que sientes que la sociedad espera de ti y que no corresponde con quien realmente quieres ser?',
+    palabrasClave: ['social', 'construido', 'género', 'igualdad', 'libertad social', 'normas', 'roles', 'opresión', 'cultura', 'historia', 'diferencia', 'cuerpo', 'mujer', 'identidad construida', 'cambiar']
+  },
+  hume: {
+    nombre: 'David Hume',
+    inicial: 'H',
+    fechas: '1711 – 1776',
+    corriente: 'Empirismo · Escepticismo moderado',
+    explicacion: 'Tu reflexión confía más en lo que podemos sentir y experimentar que en teorías abstractas. Como Hume, crees que el conocimiento viene de los sentidos y la experiencia, y que debemos ser escépticos con todo lo que no podemos observar directamente. Las emociones también juegan un papel importante en tu razonamiento.',
+    cita: '"La razón es esclava de las pasiones."',
+    pregunta: '¿Alguna vez tus emociones te llevaron a una conclusión que tu razón no podía justificar, pero que luego resultó ser correcta?',
+    palabrasClave: ['experiencia', 'sentidos', 'observar', 'sentir', 'percibir', 'emociones', 'práctico', 'real', 'concreto', 'evidencia', 'causa', 'efecto', 'costumbre', 'hábito mental', 'escepticismo']
+  },
+  marxismo: {
+    nombre: 'Karl Marx',
+    inicial: 'M',
+    fechas: '1818 – 1883',
+    corriente: 'Materialismo histórico · Filosofía social',
+    explicacion: 'Tu reflexión muestra una conciencia de las estructuras sociales, económicas y de poder que moldean la realidad humana. Como Marx, ves que las condiciones materiales y las desigualdades sociales son determinantes en la vida de las personas. La justicia social y la transformación del mundo son temas centrales para ti.',
+    cita: '"Los filósofos se han limitado a interpretar el mundo; de lo que se trata es de transformarlo."',
+    pregunta: '¿Qué estructura social o económica crees que debería cambiar para que el mundo fuera más justo?',
+    palabrasClave: ['sociedad', 'desigualdad', 'poder', 'económico', 'injusticia', 'clases', 'trabajo', 'cambio social', 'sistema', 'explotar', 'lucha', 'colectivo', 'historia', 'material', 'transformar']
+  },
+  estoico: {
+    nombre: 'Marco Aurelio',
+    inicial: 'M',
+    fechas: '121 – 180 d.C.',
+    corriente: 'Estoicismo · Filosofía de la serenidad',
+    explicacion: 'Tu reflexión muestra una gran serenidad ante lo que no puedes controlar y un enfoque en cultivar la virtud interior. Como Marco Aurelio, buscas la paz a través de la aceptación, de distinguir lo que depende de ti de lo que no, y de actuar con integridad sin importar las circunstancias externas.',
+    cita: '"Tienes poder sobre tu mente, no sobre los eventos externos. Date cuenta de esto y encontrarás la fortaleza."',
+    pregunta: '¿Hay algo en tu vida que te cause angustia y que, en realidad, no está en tus manos cambiar? ¿Cómo podrías encontrar paz con eso?',
+    palabrasClave: ['aceptar', 'control', 'paz', 'interior', 'virtud', 'serenidad', 'resignación', 'calma', 'estoico', 'naturaleza', 'deber', 'difícil', 'sufrimiento', 'fortaleza', 'ecuanimidad']
+  }
+};
+
+// ─── PALABRAS CLAVE ADICIONALES POR PREGUNTA ───
+const bonus = {
+  'realidad': { platon: 3, descartes: 2, hume: 2 },
+  'verdad': { descartes: 3, kant: 2, hume: 2, socrates: 2 },
+  'bien': { kant: 3, aristoteles: 3, estoico: 2 },
+  'libres': { sartre: 4, nietzsche: 3, kant: 2 },
+  'sentido': { sartre: 4, nietzsche: 3, beauvoir: 2 },
+  'justicia': { marxismo: 4, platon: 3, aristoteles: 2 }
+};
 
 function seleccionarPregunta(btn) {
   document.querySelectorAll('.pregunta-btn').forEach(b => b.classList.remove('activa'));
@@ -739,56 +886,82 @@ function seleccionarPregunta(btn) {
   el.style.display = 'block';
 }
 
-async function enviarReflexion() {
+function detectarFilosofo(texto, pregunta) {
+  const t = texto.toLowerCase();
+  const scores = {};
+
+  // Inicializar scores
+  for (const id in filosofos) scores[id] = 0;
+
+  // Puntuar por palabras clave
+  for (const id in filosofos) {
+    for (const kw of filosofos[id].palabrasClave) {
+      if (t.includes(kw)) scores[id] += 2;
+    }
+  }
+
+  // Bonus por pregunta seleccionada
+  for (const clave in bonus) {
+    if (pregunta.toLowerCase().includes(clave)) {
+      for (const id in bonus[clave]) {
+        scores[id] = (scores[id] || 0) + bonus[clave][id];
+      }
+    }
+  }
+
+  // Ordenar por puntuación
+  const ordenados = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+  // Si empate total, dar bonus aleatorio
+  if (ordenados[0][1] === 0) {
+    const ids = Object.keys(filosofos);
+    const aleatorio = ids[Math.floor(Math.random() * ids.length)];
+    return { principal: aleatorio, cercanos: ids.filter(i => i !== aleatorio).slice(0, 3) };
+  }
+
+  const principal = ordenados[0][0];
+  const cercanos = ordenados.slice(1, 4).filter(e => e[1] > 0).map(e => e[0]);
+  return { principal, cercanos };
+}
+
+function analizarReflexion() {
   const nombre = document.getElementById('nombre-input').value.trim() || 'Lector';
   const reflexion = document.getElementById('reflexion-input').value.trim();
 
   if (!preguntaSeleccionada) { alert('Por favor elige una pregunta filosófica primero.'); return; }
   if (reflexion.length < 30) { alert('Escribe un poco más para poder analizar tu reflexión (mínimo 30 caracteres).'); return; }
 
-  document.getElementById('btn-enviar').style.display = 'none';
-  document.getElementById('loading-box').style.display = 'block';
-  document.getElementById('resultado-box').style.display = 'none';
+  const { principal, cercanos } = detectarFilosofo(reflexion, preguntaSeleccionada);
+  const f = filosofos[principal];
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `Eres un filósofo sabio y amigable que analiza reflexiones de estudiantes de preparatoria en un blog de filosofía en español. 
+  // Rellenar resultado
+  document.getElementById('resultado-nombre').textContent = nombre;
+  document.getElementById('filosofo-nombre').textContent = f.nombre;
+  document.getElementById('filosofo-inicial').textContent = f.inicial;
+  document.getElementById('filosofo-fechas').textContent = f.fechas;
+  document.getElementById('filosofo-corriente').textContent = f.corriente;
+  document.getElementById('resultado-explicacion').textContent = f.explicacion;
+  document.getElementById('resultado-cita').textContent = f.cita;
+  document.getElementById('resultado-pregunta').textContent = f.pregunta;
 
-El estudiante llamado "${nombre}" respondió a la pregunta filosófica: "${preguntaSeleccionada}"
-
-Su reflexión fue: "${reflexion}"
-
-Analiza su reflexión de forma cálida, inteligente y motivadora. Tu respuesta debe:
-1. Identificar con qué corriente(s) filosófica(s) conecta su pensamiento (Idealismo, Empirismo, Existencialismo, Estoicismo, Utilitarismo, Pragmatismo, Racionalismo, etc.)
-2. Explicar por qué su reflexión se relaciona con esa corriente
-3. Mencionar un filósofo histórico que pensaría algo similar
-4. Terminar con una pregunta adicional que lo invite a seguir reflexionando
-
-Sé cálido, inteligente y accesible. Máximo 4 párrafos. No uses asteriscos ni markdown, solo texto plano.`
-        }]
-      })
+  // Filósofos cercanos
+  const cercanosEl = document.getElementById('cercanos-lista');
+  cercanosEl.innerHTML = '';
+  if (cercanos.length > 0) {
+    cercanos.forEach(id => {
+      const span = document.createElement('span');
+      span.className = 'cercano-tag';
+      span.textContent = filosofos[id].nombre;
+      cercanosEl.appendChild(span);
     });
-
-    const data = await response.json();
-    const texto = data.content && data.content[0] ? data.content[0].text : 'No se pudo generar el análisis. Intenta de nuevo.';
-
-    document.getElementById('resultado-nombre').textContent = nombre;
-    document.getElementById('resultado-texto').innerHTML = texto.split('\n').filter(p => p.trim()).map(p => `<p style="margin-bottom:1rem;">${p}</p>`).join('');
-    document.getElementById('loading-box').style.display = 'none';
-    document.getElementById('resultado-box').style.display = 'block';
-
-  } catch(e) {
-    document.getElementById('loading-box').style.display = 'none';
-    document.getElementById('btn-enviar').style.display = 'block';
-    alert('Hubo un error al conectar. Verifica tu conexión e intenta de nuevo.');
+    document.getElementById('cercanos-box').style.display = 'block';
+  } else {
+    document.getElementById('cercanos-box').style.display = 'none';
   }
+
+  document.getElementById('btn-enviar').style.display = 'none';
+  document.getElementById('resultado-box').style.display = 'block';
+  document.getElementById('resultado-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function nuevaReflexion() {
